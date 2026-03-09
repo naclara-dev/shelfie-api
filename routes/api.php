@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\GenderController;
+use App\Http\Controllers\ItemController;
+use App\Http\Controllers\RatingController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +21,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::apiResource('items', ItemController::class);
+Route::apiResource('genders', GenderController::class);
+Route::apiResource('ratings', RatingController::class);
+Route::apiResource('users', UserController::class);
