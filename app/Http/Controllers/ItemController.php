@@ -12,9 +12,19 @@ class ItemController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Item::all();
+        $query = Item::query();
+
+        $allowed = ['type', 'title', 'year'];
+
+        foreach ($request->all() as $property => $value) {
+            if (in_array($property, $allowed)) {
+                $query->where($property, $value);
+            }
+        }
+
+        return $query->get();
     }
 
     /**
