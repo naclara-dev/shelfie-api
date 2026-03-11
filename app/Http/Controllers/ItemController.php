@@ -51,7 +51,7 @@ class ItemController extends Controller
 
         $genreIds = array_map('intval', $genreIds);
 
-        # Create the object
+        # Creates the object
         $item = Item::create($data);
 
         # Populates the pivot table with the associated genres
@@ -68,8 +68,8 @@ class ItemController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-        return Item::findOrFail($id);
+    {       
+        return new ItemResource(Item::findOrFail($id));
     }
 
     /**
