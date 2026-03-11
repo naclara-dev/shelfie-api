@@ -17,7 +17,7 @@ class ItemController extends Controller
     public function index(Request $request)
     {
         $filter = new ItemFilter($request);
-        
+
         $query = Item::query();
         $items = $filter->apply($query)->get();
 
@@ -32,7 +32,33 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
-        Item::create($request->all());
+        # Basic validation
+        $data = $request->validate([
+            'title'    => 'required|string',
+            'genres'   => 'required',
+            'type'     => 'required|string',
+            'year'     => 'required|string',
+            'imdb_id'  => 'required|string|unique:items,imdb_id'  
+        ]);
+
+        # Normalizes the genres in an array
+        $genreIds = $data['genres'];
+
+        if (!is_array($genreIds)) {
+            $genreIds = explode(',', $genreIds); 
+            $genreIds = array_map('trim', $genreIds);   
+        }
+
+        $genreIds = array_map('intval', $genreIds);
+
+        # Create the object
+        $item = Item::create($data);
+
+        # Populates the pivot table with the associated genres
+        $item->genres()->sync($genreIds);
+
+        # Returns the created object
+        return new ItemResource($item);
     }
 
     /**

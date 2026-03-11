@@ -10,7 +10,8 @@ class Item extends Model
         'title',
         'type',
         'year',
-        'genre'
+        'genre',
+        'imdb_id'
     ];
 
     protected $with = ['genres'];
