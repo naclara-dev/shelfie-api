@@ -7,10 +7,11 @@ use Illuminate\Support\Facades\Schema;
 class CreateItemsTable extends Migration {
     public function up() {
         Schema::create('items', function (Blueprint $table) {
-            $table->id();
+            $table->id();            
             $table->string('title');
             $table->string('type');
-            $table->year('year');
+            $table->string('year');
+            $table->string('imdb_id')->unique();
             $table->timestamps();
         });
     }

@@ -9,10 +9,11 @@ class Item extends Model
     protected $fillable = [
         'title',
         'type',
-        'year'
+        'year',
+        'genre'
     ];
 
-    public function gender() {
-        return $this->belongsToMany(Gender::class);
+    public function genres() {
+        return $this->belongsToMany(Genre::class);
     }
 }
