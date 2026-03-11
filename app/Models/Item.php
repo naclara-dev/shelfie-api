@@ -13,6 +13,8 @@ class Item extends Model
         'genre'
     ];
 
+    protected $with = ['genres'];
+
     public function genres() {
         return $this->belongsToMany(Genre::class);
     }

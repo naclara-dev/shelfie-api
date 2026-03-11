@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ItemResource;
 use Illuminate\Http\Request;
+use App\Filters\ItemFilter;
 use App\Models\Item;
 
 class ItemController extends Controller
@@ -14,17 +16,12 @@ class ItemController extends Controller
      */
     public function index(Request $request)
     {
+        $filter = new ItemFilter($request);
+        
         $query = Item::query();
+        $items = $filter->apply($query)->get();
 
-        $allowed = ['type', 'title', 'year'];
-
-        foreach ($request->all() as $property => $value) {
-            if (in_array($property, $allowed)) {
-                $query->where($property, $value);
-            }
-        }
-
-        return $query->get();
+        return ItemResource::collection($items);
     }
 
     /**
