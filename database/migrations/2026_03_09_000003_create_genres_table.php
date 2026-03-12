@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Schema;
 class CreateGenresTable extends Migration {
     public function up() {
         Schema::create('genres', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
+            
             $table->id();
             $table->string('name');
             $table->timestamps();

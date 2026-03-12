@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Schema;
 class CreateRatingsTable extends Migration {
     public function up() {
         Schema::create('ratings', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
+            
             $table->id();
             $table->integer('user_id');
             $table->integer('item_id');

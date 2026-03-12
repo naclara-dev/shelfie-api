@@ -6,7 +6,9 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateGenreItemTable extends Migration {
     public function up() {
-        Schema::create('genre_item', function (Blueprint $table) {            
+        Schema::create('genre_item', function (Blueprint $table) {  
+            $table->engine = 'InnoDB';
+                      
             $table->foreignId('item_id')->constrained('items')->cascadeOnDelete();
             $table->foreignId('genre_id')->constrained('genres')->cascadeOnDelete();
             $table->primary(['item_id', 'genre_id']);

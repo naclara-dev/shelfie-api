@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Schema;
 class CreateItemsTable extends Migration {
     public function up() {
         Schema::create('items', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
+            
             $table->id();            
             $table->string('title');
             $table->string('type');
