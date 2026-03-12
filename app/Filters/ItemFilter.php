@@ -2,8 +2,6 @@
 
 namespace App\Filters;
 
-use App\Models\Item;
-
 class ItemFilter extends Filter {
     protected function filters(): array {
         return [

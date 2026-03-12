@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\ItemResource;
 use Illuminate\Http\Request;
+use App\Http\Resources\ItemResource;
 use App\Http\Requests\StoreItemRequest;
 use App\Http\Requests\UpdateItemRequest;
 use App\Filters\ItemFilter;
@@ -14,6 +14,7 @@ class ItemController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
@@ -29,7 +30,7 @@ class ItemController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\StoreItemRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreItemRequest $request)
@@ -63,8 +64,8 @@ class ItemController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  App\Models\Item  $item
+     * @param  \App\Http\Requests\UpdateItemRequest  $request
+     * @param  \App\Models\Item  $item
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateItemRequest $request, Item $item)

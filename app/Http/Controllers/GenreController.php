@@ -3,38 +3,46 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Filters\GenreFilter;
+use App\Http\Requests\StoreGenreRequest;
+use App\Http\Requests\UpdateGenreRequest;
+use App\Http\Resources\GenreResource;
+use App\Models\Genre;
 
 class GenreController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-    }
+        $filter = new GenreFilter($request);
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $query = Genre::query();
+        $genres = $filter->apply($query)->get();
+
+        return GenreResource::collection($genres);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\StoreGenreRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreGenreRequest $request)
     {
-        //
+        # Basic validation
+        $data = $request->validated();
+
+        # Creates the object
+        $genre = Genre::create($data);
+
+        # Returns the created object
+        return new GenreResource($genre);
     }
 
     /**
@@ -45,30 +53,26 @@ class GenreController extends Controller
      */
     public function show($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return new GenreResource(Genre::findOrFail($id));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Http\Requests\UpdateGenreRequest  $request
+     * @param  \App\Models\Item  $item
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateGenreRequest $request, Genre $genre)
     {
-        //
+        # Basic validation
+        $data = $request->validated();
+
+        # Updates the object
+        $genre->update($data);
+
+        # Returns the updated object
+        return new GenreResource($genre);
     }
 
     /**
@@ -77,8 +81,9 @@ class GenreController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Genre $genre)
     {
-        //
+        $genre->delete();
+        return response()->noContent();
     }
 }
