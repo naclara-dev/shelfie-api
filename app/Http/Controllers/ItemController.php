@@ -7,6 +7,7 @@ use App\Http\Resources\ItemResource;
 use App\Http\Requests\StoreItemRequest;
 use App\Http\Requests\UpdateItemRequest;
 use App\Filters\ItemFilter;
+use App\Http\Resources\GenreResource;
 use App\Models\Item;
 
 class ItemController extends Controller
@@ -25,6 +26,13 @@ class ItemController extends Controller
         $items = $filter->apply($query)->get();
 
         return ItemResource::collection($items);
+    }
+
+    /**
+     * Display a listing of genres associated with the item 
+     */
+    public function genres(Item $item) {
+        return GenreResource::collection($item->genres);
     }
 
     /**

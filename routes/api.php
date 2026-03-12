@@ -26,3 +26,5 @@ Route::apiResource('items', ItemController::class);
 Route::apiResource('genres', GenreController::class);
 Route::apiResource('ratings', RatingController::class);
 Route::apiResource('users', UserController::class);
+
+Route::get('items/{item}/genres', [ItemController::class, 'genres']);
