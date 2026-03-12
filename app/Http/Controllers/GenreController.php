@@ -83,6 +83,18 @@ class GenreController extends Controller
      */
     public function destroy(Genre $genre)
     {
+        # Checks if the genre belongs to any item
+        $itemsCount = $genre->items()->count();
+
+        # Returns an error if there is any association
+        if ($itemsCount) {
+            return response()->json([
+                'message'     => 'This genre cannot be deleted because it is associated with items.',
+                'items_count' => $itemsCount
+            ], 409);
+        }
+
+        # Deletes the genre
         $genre->delete();
         return response()->noContent();
     }
