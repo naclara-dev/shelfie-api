@@ -30,3 +30,4 @@ Route::apiResource('users', UserController::class);
 
 Route::get('items/{item}/genres', [ItemController::class, 'genres']);
 Route::post('/login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout']);
