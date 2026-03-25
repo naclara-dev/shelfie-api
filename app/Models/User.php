@@ -2,16 +2,23 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Sanctum\HasApiTokens;
 
-class Genre extends Model
-{
+class User extends Authenticatable {
+    use HasApiTokens;
+
     protected $fillable = [
         'username',
-        'email'
+        'email',
+        'password'
     ];
 
     protected $hidden = [
         'password'
     ];
+
+    public function ratings() {
+        return $this->hasMany(Rating::class);
+    }
 }

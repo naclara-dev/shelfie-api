@@ -11,7 +11,7 @@ class CreateItemsTable extends Migration {
             
             $table->id();            
             $table->string('title');
-            $table->string('type');
+            $table->foreignId('type')->constrained();
             $table->string('year');
             $table->string('imdb_id')->unique();
             $table->timestamps();

@@ -14,6 +14,13 @@ class RatingResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'id'         => $this->id,
+            'user_id'       => $this->user_id,
+            'item'       => new ItemResource($this->whenLoaded('item_id')),
+            'grade'      => $this->grade,
+            'comment'    => $this->comment,
+            'created_at' => $this->created_ad
+        ];
     }
 }

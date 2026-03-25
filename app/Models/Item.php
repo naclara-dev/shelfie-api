@@ -14,9 +14,15 @@ class Item extends Model
         'imdb_id'
     ];
 
-    protected $with = ['genres'];
+    protected $with = [
+        'genres',
+        'type'
+    ];
 
     public function genres() {
         return $this->belongsToMany(Genre::class);
+    }
+    public function type() {
+        return $this->belongsTo(Type::class, 'type');
     }
 }

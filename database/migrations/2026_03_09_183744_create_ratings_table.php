@@ -10,9 +10,9 @@ class CreateRatingsTable extends Migration {
             $table->engine = 'InnoDB';
             
             $table->id();
-            $table->integer('user_id');
-            $table->integer('item_id');
-            $table->integer('grade');
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('item_id')->constrained('items')->cascadeOnDelete();
+            $table->decimal('rating', 3, 1);
             $table->string('comment');
             $table->timestamps();
         });

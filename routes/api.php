@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\RatingController;
@@ -28,3 +29,4 @@ Route::apiResource('ratings', RatingController::class);
 Route::apiResource('users', UserController::class);
 
 Route::get('items/{item}/genres', [ItemController::class, 'genres']);
+Route::post('/login', [AuthController::class, 'login']);

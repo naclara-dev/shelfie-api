@@ -8,7 +8,8 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        $this->call(OmdbSeeder::class);
         $this->call(GenreSeeder::class);
+        $this->call(TypeSeeder::class);
+        $this->call(ItemSeeder::class);        
     }
 }

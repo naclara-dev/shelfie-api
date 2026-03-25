@@ -13,8 +13,7 @@ class GenreSeeder extends Seeder
      * @return void
      */
     public function run()
-    {     
-        # All genres from OMBDb API   
+    {       
         $genres = [
         'Action',
         'Adventure',
@@ -35,12 +34,12 @@ class GenreSeeder extends Seeder
         'Romance',
         'Sci-Fi',
         'Sport',
+        'Superheroes',
         'Thriller',
         'War',
         'Western'
         ];
 
-        # Creates a new gender for each item in the array
         foreach ($genres as $genre) {
             Genre::firstOrCreate(['name' => $genre]);
         }

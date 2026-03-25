@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\RatingResource;
+use App\Models\Rating;
 use Illuminate\Http\Request;
 
 class RatingController extends Controller
@@ -13,17 +15,7 @@ class RatingController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return RatingResource::collection(Rating::with('item')->get());
     }
 
     /**
@@ -44,17 +36,6 @@ class RatingController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
     {
         //
     }
