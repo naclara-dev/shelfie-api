@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -10,7 +11,7 @@ class AuthController extends Controller
 {
     /**
      * Authenticates the user and provides an access token.
-     * @param  Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */    
     public function login(Request $request) {
@@ -43,8 +44,17 @@ class AuthController extends Controller
     }
 
     /**
+     * Displays personal user information.
+     * @param  \Illuminate\Http\Request  $request
+     * @return \App\Http\Resources\UserResource
+     */      
+    public function me(Request $request) {
+        return new UserResource($request->user());
+    }
+
+    /**
      * Deletes the current access token.
-     * @param  Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */   
     public function logout(Request $request) {

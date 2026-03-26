@@ -16,11 +16,11 @@ class RatingResource extends JsonResource
     {
         return [
             'id'         => $this->id,
-            'user_id'       => $this->user_id,
-            'item'       => new ItemResource($this->whenLoaded('item_id')),
-            'grade'      => $this->grade,
+            'user_id'    => $this->user_id,
+            'item'       => new ItemResource($this->whenLoaded('item')),
+            'rating'     => $this->rating,
             'comment'    => $this->comment,
-            'created_at' => $this->created_ad
+            'created_at' => $this->created_at
         ];
     }
 }

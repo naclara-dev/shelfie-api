@@ -19,15 +19,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
+/*
+| GENERAL
+*/
 Route::apiResource('items', ItemController::class);
 Route::apiResource('genres', GenreController::class);
-Route::apiResource('ratings', RatingController::class);
 Route::apiResource('users', UserController::class);
+
+/*
+| PROTECTED - USER ACTIONS
+*/
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/me', [AuthController::class, 'me']);
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::apiResource('ratings', RatingController::class);    
+});
 
 Route::get('items/{item}/genres', [ItemController::class, 'genres']);
 Route::post('/login', [AuthController::class, 'login']);
-Route::post('/logout', [AuthController::class, 'logout']);
