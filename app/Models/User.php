@@ -19,11 +19,30 @@ class User extends Authenticatable {
         'password'
     ];
 
+    /**
+     * Hashes the password on saving.
+     * @param string $value
+     */
     public function setPasswordAttribute($value) {
         $this->attributes['password'] = Hash::make($value);
     }
 
+    /**
+     * Checks if the user has admin privileges.
+     */
+    public function isAdmin() {
+        return $this->role->name === 'admin';
+    }    
+
+    /*
+    |-------------------
+    | RELATIONSHIPS
+    |-------------------
+    */
     public function ratings() {
         return $this->hasMany(Rating::class);
+    }    
+    public function role() {
+        return $this->belongsTo(Role::class);
     }
 }

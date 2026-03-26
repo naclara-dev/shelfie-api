@@ -19,6 +19,11 @@ class Item extends Model
         'type'
     ];
 
+    /*
+    |-------------------
+    | RELATIONSHIPS
+    |-------------------
+    */  
     public function genres() {
         return $this->belongsToMany(Genre::class);
     }

@@ -15,6 +15,11 @@ class Rating extends Model
 
     protected $with = ['item', 'user'];
 
+    /*
+    |-------------------
+    | RELATIONSHIPS
+    |-------------------
+    */  
     public function item() {
         return $this->belongsTo(Item::class);
     }

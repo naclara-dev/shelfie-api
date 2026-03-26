@@ -10,6 +10,11 @@ class Type extends Model
         'name'
     ];
 
+    /*
+    |-------------------
+    | RELATIONSHIPS
+    |-------------------
+    */    
     public function items() {
         return $this->hasMany(Item::class);
     }

@@ -2,10 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Genre extends Model
+class Role extends Model
 {
     protected $fillable = [
         'name'
@@ -15,8 +14,8 @@ class Genre extends Model
     |-------------------
     | RELATIONSHIPS
     |-------------------
-    */  
-    public function items() {
-        return $this->belongsToMany(Item::class);
+    */
+    public function users() {
+        return $this->hasMany(User::class);
     }
 }
