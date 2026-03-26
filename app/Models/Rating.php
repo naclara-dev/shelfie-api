@@ -13,7 +13,7 @@ class Rating extends Model
         'comment'
     ];
 
-    protected $with = ['item'];
+    protected $with = ['item', 'user'];
 
     public function item() {
         return $this->belongsTo(Item::class);

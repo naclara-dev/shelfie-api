@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\StoreUserRequest;
-use App\Http\Resources\UserResource;
+use App\Http\Resources\UserPublicResource;
 use App\Models\User;
 
 class UserController extends Controller
@@ -35,7 +35,7 @@ class UserController extends Controller
         $user = User::create($data);
 
         # Returns the created object
-        return new UserResource($user);
+        return new UserPublicResource($user);
     }
 
     /**

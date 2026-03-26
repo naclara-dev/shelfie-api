@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\UserResource;
+use App\Http\Resources\UserPrivateResource;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -46,10 +46,10 @@ class AuthController extends Controller
     /**
      * Displays personal user information.
      * @param  \Illuminate\Http\Request  $request
-     * @return \App\Http\Resources\UserResource
+     * @return \App\Http\Resources\UserPrivateResource
      */      
     public function me(Request $request) {
-        return new UserResource($request->user());
+        return new UserPrivateResource($request->user());
     }
 
     /**
