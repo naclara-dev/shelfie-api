@@ -32,7 +32,7 @@ Route::apiResource('users', UserController::class);
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/me', [AuthController::class, 'me']);
     Route::post('/logout', [AuthController::class, 'logout']);
-    Route::apiResource('ratings', RatingController::class);    
+    Route::get('items/{item}/ratings', [ItemController::class, 'ratings']);
 });
 
 Route::get('items/{item}/genres', [ItemController::class, 'genres']);

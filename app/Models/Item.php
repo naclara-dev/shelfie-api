@@ -22,6 +22,9 @@ class Item extends Model
     public function genres() {
         return $this->belongsToMany(Genre::class);
     }
+    public function ratings() {
+        return $this->hasMany(Rating::class);
+    }
     public function type() {
         return $this->belongsTo(Type::class, 'type');
     }

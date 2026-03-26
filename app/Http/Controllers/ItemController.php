@@ -8,6 +8,7 @@ use App\Http\Requests\StoreItemRequest;
 use App\Http\Requests\UpdateItemRequest;
 use App\Filters\ItemFilter;
 use App\Http\Resources\GenreResource;
+use App\Http\Resources\RatingResource;
 use App\Models\Item;
 
 class ItemController extends Controller
@@ -34,6 +35,14 @@ class ItemController extends Controller
     public function genres(Item $item) {
         return GenreResource::collection($item->genres);
     }
+
+    /**
+     * Display a listing of ratings associated with the item 
+     */
+    public function ratings(Item $item) {
+        return RatingResource::collection($item->ratings);
+    }
+    
 
     /**
      * Store a newly created resource in storage.
