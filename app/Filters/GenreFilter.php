@@ -5,7 +5,8 @@ namespace App\Filters;
 class GenreFilter extends Filter {
     protected function filters(): array {
         return [
-            'name' => 'filterName',           
+            'name' => 'filterName',
+            'id'   => 'filterId'           
         ];
     }
 
@@ -15,5 +16,9 @@ class GenreFilter extends Filter {
     
     protected function filterName($value) {
         $this->builder->where('name', 'LIKE', "%{$value}%");
+    }
+
+    protected function filterId($value) {
+        $this->builder->where('id', $value);
     }
 }
