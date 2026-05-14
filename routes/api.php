@@ -33,7 +33,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/me', [AuthController::class, 'me']);
     Route::post('/logout', [AuthController::class, 'logout']);  
     Route::get('items/{item}/ratings', [ItemController::class, 'ratings']);  
+    Route::post('/ratings', [RatingController::class, 'store']);
+    Route::delete('/ratings/{rating}', [RatingController::class, 'destroy']);
 });
 
+/*
+| CUSTOM
+*/
+Route::get('genres/{genre}/items', [GenreController::class, 'items']);
 Route::get('items/{item}/genres', [ItemController::class, 'genres']);
 Route::post('/login', [AuthController::class, 'login']);

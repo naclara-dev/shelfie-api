@@ -6,6 +6,28 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class StoreItemRequest extends FormRequest
 {
+    protected function prepareForValidation()
+    {
+        if (!$this->has('genres')) {
+            return;
+        }
+
+        $genres = $this->input('genres');
+
+        if (is_string($genres) && str_contains($genres, ',')) {
+            $genres = array_map('trim', explode(',', $genres));
+            $genres = array_values(array_filter($genres, function ($genre) {
+                return $genre !== '';
+            }));
+        } elseif (!is_array($genres)) {
+            $genres = [$genres];
+        }
+
+        $this->merge([
+            'genres' => $genres
+        ]);
+    }
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -25,11 +47,24 @@ class StoreItemRequest extends FormRequest
     {
         return [
             'title'    => 'required|string',
-            'type'     => 'required|string|in:movie,series',
+            'type'     => 'required|string|exists:types,id',
             'year'     => 'sometimes|string',
-            'imdb_id'  => 'required|string',
+            'imdb_id'  => 'required|string|unique:items,imdb_id',
             'genres'   => 'sometimes|array',
             'genres.*' => 'exists:genres,id|distinct'  
+        ];
+    }
+
+    /**
+     * Get custom messages for validator errors.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'type.exists'     => 'The type ID does not exists.',
+            'imdb_id.unique'  => 'An item with this IMDb ID already exists.'
         ];
     }
 }

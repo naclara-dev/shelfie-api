@@ -66,11 +66,20 @@ class RatingController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\Rating  $rating
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Rating $rating)
     {
-        //
+        # Che
+        if ($rating->user_id !== auth()->id()) {
+            return response()->json([
+                'message' => 'You can only delete ratings created by you.'
+            ], 403);
+        }
+
+        $rating->delete();
+
+        return response()->noContent();
     }
 }
