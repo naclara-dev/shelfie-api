@@ -25,7 +25,7 @@ class RatingController extends Controller
         $query = Rating::query();
         $ratings = $filter->apply($query)->get();
 
-        return RatingResource::collection($ratings);
+        return $this->success(RatingResource::collection($ratings));
     }
 
     /**
@@ -46,7 +46,7 @@ class RatingController extends Controller
         $rating = Rating::create($data);
 
         # Returns the created rating
-        return new RatingResource($rating->load('title'));
+        return $this->success(new RatingResource($rating->load('title')));
     }
 
     /**
@@ -57,7 +57,13 @@ class RatingController extends Controller
      */
     public function show($id)
     {
-        return new RatingResource(Rating::findOrFail($id));
+        $rating = Rating::find($id);
+
+        if (!$rating) {
+            return $this->error('Rating not found.', 404);
+        }
+
+        return $this->success(new RatingResource($rating));
     }
 
     /**
@@ -73,7 +79,7 @@ class RatingController extends Controller
 
         $rating->update($data);
 
-        return new RatingResource($rating);
+        return $this->success(new RatingResource($rating));
     }
 
     /**
@@ -85,8 +91,7 @@ class RatingController extends Controller
      */
     public function destroy(DestroyRatingRequest $request, Rating $rating)
     {
-        $rating->delete();
-
-        return response()->noContent();
+        $rating->delete();        
+        return $this->success();
     }
 }

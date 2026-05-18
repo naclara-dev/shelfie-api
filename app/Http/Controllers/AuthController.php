@@ -26,9 +26,7 @@ class AuthController extends Controller
 
         # Validates the password
         if (!$user || !Hash::check($request->password, $user->password)) {
-            return response()->json([
-                'message' => 'Invalid credentials.'
-            ], 401);
+            return $this->error('Invalid credentials.', 401);
         }
 
         # Deletes old tokens for this user
@@ -37,7 +35,7 @@ class AuthController extends Controller
         # Creates a new access token
         $token = $user->createToken('api-token')->plainTextToken;
 
-        return response()->json([
+        return $this->success([
             'user'  => $user,
             'token' => $token
         ]);
@@ -49,7 +47,7 @@ class AuthController extends Controller
      * @return \App\Http\Resources\UserPrivateResource
      */      
     public function me(Request $request) {
-        return new UserPrivateResource($request->user());
+        return $this->success(new UserPrivateResource($request->user()));
     }
 
     /**
@@ -60,6 +58,6 @@ class AuthController extends Controller
     public function logout(Request $request) {
         $request->user()->currentAccessToken()->delete();
 
-        return response()->noContent();
+        return $this->success();
     }
 }

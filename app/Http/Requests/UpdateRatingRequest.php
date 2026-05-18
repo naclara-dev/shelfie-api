@@ -15,7 +15,7 @@ class UpdateRatingRequest extends FormRequest
     public function authorize()
     {
         $rating = $this->route('rating');        
-        # Check if the requesting user owns the record
+        # Check if the requesting user is the creator of the register
         return $this->user() && $rating && $this->user()->id === $rating->created_by;
     }
 

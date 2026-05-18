@@ -37,8 +37,12 @@ Route::get('/genres/{genre}', [GenreController::class, 'show']);
 Route::get('/ratings', [RatingController::class, 'index']);
 Route::get('/ratings/{rating}', [RatingController::class, 'show']);
 
+// Users
+Route::get('/users/{user}/ratings', [UserController::class, 'ratings']);
+
 // Authentication
 Route::post('/login', [AuthController::class, 'login']);
+Route::post('/users', [UserController::class, 'store']);
 
 /*
 |---------------------------------
@@ -69,8 +73,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::patch('/ratings/{rating}', [RatingController::class, 'update']);
     Route::delete('/ratings/{rating}', [RatingController::class, 'destroy']);
 
-    // Users
-    Route::post('/users', [UserController::class, 'store']);
+    // Users    
     Route::put('/users/{user}', [UserController::class, 'update']);
     Route::patch('/users/{user}', [UserController::class, 'update']);
 });

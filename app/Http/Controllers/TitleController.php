@@ -27,21 +27,21 @@ class TitleController extends Controller
         $query = Title::query();
         $titles = $filter->apply($query)->get();
 
-        return TitleResource::collection($titles);
+        return $this->success(TitleResource::collection($titles));
     }
 
     /**
      * Display a listing of genres associated with the title 
      */
     public function genres(Title $title) {
-        return GenreResource::collection($title->genres);
+        return $this->success(GenreResource::collection($title->genres));
     }
 
     /**
      * Display a listing of ratings associated with the title 
      */
     public function ratings(Title $title) {
-        return RatingResource::collection($title->ratings);
+        return $this->success(RatingResource::collection($title->ratings));
     }
     
 
@@ -66,7 +66,7 @@ class TitleController extends Controller
         }
 
         # Returns the created object
-        return new TitleResource($title->load('genres'));
+        return $this->success(new TitleResource($title->load('genres')));
     }
 
     /**
@@ -77,7 +77,13 @@ class TitleController extends Controller
      */
     public function show($id)
     {       
-        return new TitleResource(Title::findOrFail($id));
+        $title = Title::find($id);
+
+        if (!$title) {
+            return $this->error('Title not found.', 404);
+        }
+
+        return $this->success(new TitleResource($title));
     }
 
     /**
@@ -101,7 +107,7 @@ class TitleController extends Controller
         }
 
         # Returns the updated object
-        return new TitleResource($title->load('genres'));
+        return $this->success(new TitleResource($title->load('genres')));
     }
 
     /**
@@ -114,6 +120,6 @@ class TitleController extends Controller
     public function destroy(DestroyTitleRequest $request, Title $title)
     {        
         $title->delete();
-        return response()->noContent();
+        return $this->success();
     }
 }

@@ -26,7 +26,7 @@ class GenreController extends Controller
         $query = Genre::query();
         $genres = $filter->apply($query)->get();
 
-        return GenreResource::collection($genres);
+        return $this->success(GenreResource::collection($genres));
     }
 
     /**
@@ -34,7 +34,7 @@ class GenreController extends Controller
      */
     public function titles(Genre $genre)
     {
-        return TitleResource::collection($genre->titles);
+        return $this->success(TitleResource::collection($genre->titles));
     }
 
     /**
@@ -53,7 +53,7 @@ class GenreController extends Controller
         $genre = Genre::create($data);
 
         # Returns the created object
-        return new GenreResource($genre);
+        return $this->success(new GenreResource($genre));
     }
 
     /**
@@ -64,7 +64,13 @@ class GenreController extends Controller
      */
     public function show($id)
     {
-        return new GenreResource(Genre::findOrFail($id));
+        $genre = Genre::find($id);
+
+        if (!$genre) {
+            return $this->error('Genre not found.', 404);
+        }
+
+        return $this->success(new GenreResource($genre));
     }
 
     /**
@@ -83,7 +89,7 @@ class GenreController extends Controller
         $genre->update($data);
 
         # Returns the updated object
-        return new GenreResource($genre);
+        return $this->success(new GenreResource($genre));
     }
 
     /**
@@ -100,14 +106,15 @@ class GenreController extends Controller
 
         # Returns an error if there is any association
         if ($titlesCount) {
-            return response()->json([
-                'message'      => 'This genre cannot be deleted because it is associated with titles.',
-                'titles_count' => $titlesCount
-            ], 409);
+            return $this->error(
+                'This genre cannot be deleted because it is associated with titles.',
+                409,
+                ['titles_count' => $titlesCount]
+            );
         }
 
         # Deletes the genre
         $genre->delete();
-        return response()->noContent();
+        return $this->success();
     }
 }

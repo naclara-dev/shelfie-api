@@ -19,7 +19,7 @@ class UserSeeder extends Seeder
                 "email" => "naclaraspam@gmail.com",
                 "username" => "naclara",
                 "password" => "123",
-                "role" => 2
+                "role_id" => 2
             ]
         ];
 

@@ -13,7 +13,7 @@ class User extends Authenticatable {
         'username',
         'email',
         'password',
-        'role'
+        'role_id'
     ];
 
     protected $hidden = [
@@ -32,7 +32,7 @@ class User extends Authenticatable {
      * Checks if the user has admin privileges.
      */
     public function isAdmin() {
-        return $this->role->name === 'admin';
+        return $this->role && $this->role->name === 'admin';
     }    
 
     /*
@@ -44,6 +44,6 @@ class User extends Authenticatable {
         return $this->hasMany(Rating::class, 'created_by');
     }    
     public function role() {
-        return $this->belongsTo(Role::class);
+        return $this->belongsTo(Role::class, 'role_id');
     }
 }
