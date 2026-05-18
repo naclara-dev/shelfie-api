@@ -4,9 +4,9 @@ namespace Database\Seeders;
 
 use App\Models\Genre;
 use Illuminate\Database\Seeder;
-use App\Models\Item;
+use App\Models\Title;
 
-class ItemSeeder extends Seeder
+class TitleSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,10 +15,10 @@ class ItemSeeder extends Seeder
      */
     public function run()
     {
-        $items = [
+        $titles = [
             [
                 'data' => [
-                    'title' => 'Interstellar',
+                    'name' => 'Interstellar',
                     'type' => 1,
                     'year' => '2014',
                     'imdb_id' => 'tt0816692',
@@ -27,7 +27,7 @@ class ItemSeeder extends Seeder
             ],
             [
                 'data' => [
-                    'title' => 'Tangled',
+                    'name' => 'Tangled',
                     'type' => 1,
                     'year' => '2010',
                     'imdb_id' => 'tt0398286',
@@ -36,7 +36,7 @@ class ItemSeeder extends Seeder
             ],
             [
                 'data' => [
-                    'title' => 'The Big Bang Theory',
+                    'name' => 'The Big Bang Theory',
                     'type' => 2,
                     'year' => '2007-2019',
                     'imdb_id' => 'tt0898266',
@@ -45,7 +45,7 @@ class ItemSeeder extends Seeder
             ],
             [
                 'data' => [
-                    'title' => 'Batman Begins',
+                    'name' => 'Batman Begins',
                     'type' => 1,
                     'year' => '2005',
                     'imdb_id' => 'tt0372784',
@@ -54,7 +54,7 @@ class ItemSeeder extends Seeder
             ],
             [
                 'data' => [
-                    'title' => 'Orange Is the New Black',
+                    'name' => 'Orange Is the New Black',
                     'type' => 2,
                     'year' => '2013-2019',
                     'imdb_id' => 'tt2372162',
@@ -63,8 +63,8 @@ class ItemSeeder extends Seeder
             ]
         ];
 
-        foreach ($items as $entry) {
-            $item = Item::firstOrCreate(
+        foreach ($titles as $entry) {
+            $title = Title::firstOrCreate(
                 ['imdb_id' => $entry['data']['imdb_id']],
                 $entry['data']
             );
@@ -73,7 +73,7 @@ class ItemSeeder extends Seeder
                 ->pluck('id')
                 ->toArray();
 
-            $item->genres()->sync($genreIds);
+            $title->genres()->sync($genreIds);
         }
     }
 }

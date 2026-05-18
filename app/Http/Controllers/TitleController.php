@@ -3,15 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Resources\ItemResource;
-use App\Http\Requests\StoreItemRequest;
-use App\Http\Requests\UpdateItemRequest;
-use App\Filters\ItemFilter;
+use App\Http\Resources\TitleResource;
+use App\Http\Requests\StoreTitleRequest;
+use App\Http\Requests\UpdateTitleRequest;
+use App\Filters\TitleFilter;
 use App\Http\Resources\GenreResource;
 use App\Http\Resources\RatingResource;
-use App\Models\Item;
+use App\Models\Title;
 
-class ItemController extends Controller
+class TitleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,50 +21,50 @@ class ItemController extends Controller
      */
     public function index(Request $request)
     {
-        $filter = new ItemFilter($request);
+        $filter = new TitleFilter($request);
 
-        $query = Item::query();
-        $items = $filter->apply($query)->get();
+        $query = Title::query();
+        $titles = $filter->apply($query)->get();
 
-        return ItemResource::collection($items);
+        return TitleResource::collection($titles);
     }
 
     /**
-     * Display a listing of genres associated with the item 
+     * Display a listing of genres associated with the title 
      */
-    public function genres(Item $item) {
-        return GenreResource::collection($item->genres);
+    public function genres(Title $title) {
+        return GenreResource::collection($title->genres);
     }
 
     /**
-     * Display a listing of ratings associated with the item 
+     * Display a listing of ratings associated with the title 
      */
-    public function ratings(Item $item) {
-        return RatingResource::collection($item->ratings);
+    public function ratings(Title $title) {
+        return RatingResource::collection($title->ratings);
     }
     
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreItemRequest  $request
+     * @param  \App\Http\Requests\StoreTitleRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreItemRequest $request)
+    public function store(StoreTitleRequest $request)
     {
         # Basic validation
         $data = $request->validated();
 
         # Creates the object
-        $item = Item::create($data);
+        $title = Title::create($data);
 
         # Populates the pivot table with the associated genres
         if ($request->has('genres')) {
-            $item->genres()->sync($data['genres']);
+            $title->genres()->sync($data['genres']);
         }
 
         # Returns the created object
-        return new ItemResource($item->load('genres'));
+        return new TitleResource($title->load('genres'));
     }
 
     /**
@@ -75,42 +75,42 @@ class ItemController extends Controller
      */
     public function show($id)
     {       
-        return new ItemResource(Item::findOrFail($id));
+        return new TitleResource(Title::findOrFail($id));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateItemRequest  $request
-     * @param  \App\Models\Item  $item
+     * @param  \App\Http\Requests\UpdateTitleRequest  $request
+     * @param  \App\Models\Title  $title
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateItemRequest $request, Item $item)
+    public function update(UpdateTitleRequest $request, Title $title)
     {
         # Basic validation
         $data = $request->validated();
 
         # Updates the object
-        $item->update($data);
+        $title->update($data);
 
         # Sync the pivot table with the associated genres
         if ($request->has('genres')) {
-            $item->genres()->sync($data['genres']);
+            $title->genres()->sync($data['genres']);
         }
 
         # Returns the updated object
-        return new ItemResource($item->load('genres'));
+        return new TitleResource($title->load('genres'));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  App\Models\Item  $item
+     * @param  App\Models\Title  $title
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Item $item)
+    public function destroy(Title $title)
     {        
-        $item->delete();
+        $title->delete();
         return response()->noContent();
     }
 }

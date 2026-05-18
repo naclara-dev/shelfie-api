@@ -2,21 +2,30 @@
 
 namespace App\Http\Controllers;
 
+use App\Filters\RatingFilter;
+use App\Http\Requests\DestroyRatingRequest;
 use App\Http\Requests\StoreRatingRequest;
+use App\Http\Requests\UpdateRatingRequest;
 use App\Http\Resources\RatingResource;
-use App\Models\Rating;
 use Illuminate\Http\Request;
+use App\Models\Rating;
 
 class RatingController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return RatingResource::collection(Rating::with('item')->get());
+        $filter = new RatingFilter($request);
+
+        $query = Rating::query();
+        $ratings = $filter->apply($query)->get();
+
+        return RatingResource::collection($ratings);
     }
 
     /**
@@ -37,7 +46,7 @@ class RatingController extends Controller
         $rating = Rating::create($data);
 
         # Returns the created rating
-        return new RatingResource($rating->load('item'));
+        return new RatingResource($rating->load('title'));
     }
 
     /**
@@ -48,36 +57,34 @@ class RatingController extends Controller
      */
     public function show($id)
     {
-        //
+        return new RatingResource(Rating::findOrFail($id));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Http\Requests\UpdateRatingRequest  $request
+     * @param  \App\Models\Rating  $rating
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateRatingRequest $request, Rating $rating)
     {
-        //
+        $data = $request->validated();
+
+        $rating->update($data);
+
+        return new RatingResource($rating);
     }
 
     /**
      * Remove the specified resource from storage.
      *
+     * @param  \App\Http\Requests\DestroyRatingRequest  $request
      * @param  \App\Models\Rating  $rating
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Rating $rating)
+    public function destroy(DestroyRatingRequest $request, Rating $rating)
     {
-        # Che
-        if ($rating->user_id !== auth()->id()) {
-            return response()->json([
-                'message' => 'You can only delete ratings created by you.'
-            ], 403);
-        }
-
         $rating->delete();
 
         return response()->noContent();

@@ -7,7 +7,7 @@ use App\Filters\GenreFilter;
 use App\Http\Requests\StoreGenreRequest;
 use App\Http\Requests\UpdateGenreRequest;
 use App\Http\Resources\GenreResource;
-use App\Http\Resources\ItemResource;
+use App\Http\Resources\TitleResource;
 use App\Models\Genre;
 
 class GenreController extends Controller
@@ -29,11 +29,11 @@ class GenreController extends Controller
     }
 
     /**
-     * Display a listing of items associated with the genre.
+     * Display a listing of titles associated with the genre.
      */
-    public function items(Genre $genre)
+    public function titles(Genre $genre)
     {
-        return ItemResource::collection($genre->items);
+        return TitleResource::collection($genre->titles);
     }
 
     /**
@@ -68,8 +68,8 @@ class GenreController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateGenreRequest  $request
-     * @param  \App\Models\Item  $item
+     * @param  \App\Http\Requests\UpdateGenreRequest $request
+     * @param  \App\Models\Genre $genre
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateGenreRequest $request, Genre $genre)
@@ -87,19 +87,19 @@ class GenreController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param \App\Models\Genre $genre 
      * @return \Illuminate\Http\Response
      */
     public function destroy(Genre $genre)
     {
-        # Checks if the genre belongs to any item
-        $itemsCount = $genre->items()->count();
+        # Checks if the genre belongs to any title
+        $titlesCount = $genre->titles()->count();
 
         # Returns an error if there is any association
-        if ($itemsCount) {
+        if ($titlesCount) {
             return response()->json([
-                'message'     => 'This genre cannot be deleted because it is associated with items.',
-                'items_count' => $itemsCount
+                'message'      => 'This genre cannot be deleted because it is associated with titles.',
+                'titles_count' => $titlesCount
             ], 409);
         }
 

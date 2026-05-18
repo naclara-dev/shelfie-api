@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreItemRequest extends FormRequest
+class UpdateTitleRequest extends FormRequest
 {
     protected function prepareForValidation()
     {
@@ -46,12 +46,12 @@ class StoreItemRequest extends FormRequest
     public function rules()
     {
         return [
-            'title'    => 'required|string',
-            'type'     => 'required|string|exists:types,id',
+            'name'    => 'sometimes|string',
+            'type'     => 'sometimes|string|exists:types,id',
             'year'     => 'sometimes|string',
-            'imdb_id'  => 'required|string|unique:items,imdb_id',
+            'imdb_id'  => 'sometimes|string',
             'genres'   => 'sometimes|array',
-            'genres.*' => 'exists:genres,id|distinct'  
+            'genres.*' => 'exists:genres,id|distinct' 
         ];
     }
 
@@ -63,8 +63,7 @@ class StoreItemRequest extends FormRequest
     public function messages()
     {
         return [
-            'type.exists'     => 'The type ID does not exists.',
-            'imdb_id.unique'  => 'An item with this IMDb ID already exists.'
+            'imdb_id.unique' => 'A title with this imdb_id already exists.'
         ];
     }
 }

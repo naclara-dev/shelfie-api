@@ -32,7 +32,6 @@ abstract class Filter {
             $this->throwError('Invalid query parameter(s): ' . implode(', ', $invalid));
         }
 
-
         # Iterates over the filters
         foreach ($this->filters() as $name => $method) {
             # Checks if the request has this parameter

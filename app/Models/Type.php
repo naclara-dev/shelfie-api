@@ -15,7 +15,7 @@ class Type extends Model
     | RELATIONSHIPS
     |-------------------
     */    
-    public function items() {
-        return $this->hasMany(Item::class);
+    public function titles() {
+        return $this->hasMany(Title::class, 'type');
     }
 }

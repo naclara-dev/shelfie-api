@@ -8,20 +8,20 @@ class Rating extends Model
 {
     protected $fillable = [
         'user_id',
-        'item_id',
+        'title_id',
         'rating',
         'comment'
     ];
 
-    protected $with = ['item', 'user'];
+    protected $with = ['title', 'user'];
 
     /*
     |-------------------
     | RELATIONSHIPS
     |-------------------
     */  
-    public function item() {
-        return $this->belongsTo(Item::class);
+    public function title() {
+        return $this->belongsTo(Title::class, 'title_id');
     }
     public function user() {
         return $this->belongsTo(User::class);

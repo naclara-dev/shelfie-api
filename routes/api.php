@@ -2,8 +2,8 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GenreController;
-use App\Http\Controllers\ItemController;
 use App\Http\Controllers\RatingController;
+use App\Http\Controllers\TitleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -22,9 +22,10 @@ use Illuminate\Support\Facades\Route;
 /*
 | GENERAL
 */
-Route::apiResource('items', ItemController::class);
+Route::apiResource('titles', TitleController::class);
 Route::apiResource('genres', GenreController::class);
 Route::apiResource('users', UserController::class);
+Route::apiResource('ratings', RatingController::class)->only(['index', 'show']);
 
 /*
 | PROTECTED - USER ACTIONS
@@ -32,14 +33,16 @@ Route::apiResource('users', UserController::class);
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/me', [AuthController::class, 'me']);
     Route::post('/logout', [AuthController::class, 'logout']);  
-    Route::get('items/{item}/ratings', [ItemController::class, 'ratings']);  
+    Route::get('titles/{title}/ratings', [TitleController::class, 'ratings']);  
     Route::post('/ratings', [RatingController::class, 'store']);
+    Route::put('/ratings/{rating}', [RatingController::class, 'update']);
+    Route::patch('/ratings/{rating}', [RatingController::class, 'update']);
     Route::delete('/ratings/{rating}', [RatingController::class, 'destroy']);
 });
 
 /*
 | CUSTOM
 */
-Route::get('genres/{genre}/items', [GenreController::class, 'items']);
-Route::get('items/{item}/genres', [ItemController::class, 'genres']);
+Route::get('genres/{genre}/titles', [GenreController::class, 'titles']);
+Route::get('titles/{title}/genres', [TitleController::class, 'genres']);
 Route::post('/login', [AuthController::class, 'login']);

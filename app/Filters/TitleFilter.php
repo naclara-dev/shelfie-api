@@ -2,10 +2,10 @@
 
 namespace App\Filters;
 
-class ItemFilter extends Filter {
+class TitleFilter extends Filter {
     protected function filters(): array {
         return [
-            'title'    => 'filterTitle',
+            'name'     => 'filterName',
             'genres'   => 'filterGenres',
             'type'     => 'filterType',
             'year'     => 'filterYear',
@@ -17,8 +17,8 @@ class ItemFilter extends Filter {
         return array_keys($this->filters());
     }
     
-    protected function filterTitle($value) {
-        $this->builder->where('title', 'LIKE', "%{$value}%");
+    protected function filterName($value) {
+        $this->builder->where('name', 'LIKE', "%{$value}%");
     }
 
     protected function filterGenres($value) {

@@ -16,7 +16,7 @@ class Genre extends Model
     | RELATIONSHIPS
     |-------------------
     */  
-    public function items() {
-        return $this->belongsToMany(Item::class);
+    public function titles() {
+        return $this->belongsToMany(Title::class, 'genre_title', 'genre_id', 'title_id');
     }
 }

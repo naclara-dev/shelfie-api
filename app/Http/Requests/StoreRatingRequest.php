@@ -24,7 +24,7 @@ class StoreRatingRequest extends FormRequest
     public function rules()
     {
         return [
-            'item_id' => 'required|exists:items,id',
+            'title_id' => 'required|exists:titles,id',
             'rating'  => 'required|between:0,10',
             'comment' => 'required|string|max:255'  
         ];
