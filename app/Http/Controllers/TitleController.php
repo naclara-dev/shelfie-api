@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\DestroyTitleRequest;
 use App\Http\Resources\TitleResource;
 use App\Http\Requests\StoreTitleRequest;
 use App\Http\Requests\UpdateTitleRequest;
@@ -54,6 +55,7 @@ class TitleController extends Controller
     {
         # Basic validation
         $data = $request->validated();
+        $data['created_by'] = auth()->id();
 
         # Creates the object
         $title = Title::create($data);
@@ -105,10 +107,11 @@ class TitleController extends Controller
     /**
      * Remove the specified resource from storage.
      *
+     * @param  \App\Http\Requests\DestroyTitleRequest  $request
      * @param  App\Models\Title  $title
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Title $title)
+    public function destroy(DestroyTitleRequest $request, Title $title)
     {        
         $title->delete();
         return response()->noContent();

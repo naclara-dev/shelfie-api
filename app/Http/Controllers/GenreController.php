@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Filters\GenreFilter;
+use App\Http\Requests\DestroyGenreRequest;
 use App\Http\Requests\StoreGenreRequest;
 use App\Http\Requests\UpdateGenreRequest;
 use App\Http\Resources\GenreResource;
@@ -46,6 +47,7 @@ class GenreController extends Controller
     {
         # Basic validation
         $data = $request->validated();
+        $data['created_by'] = auth()->id();
 
         # Creates the object
         $genre = Genre::create($data);
@@ -87,10 +89,11 @@ class GenreController extends Controller
     /**
      * Remove the specified resource from storage.
      *
+     * @param \App\Http\Requests\DestroyGenreRequest $request 
      * @param \App\Models\Genre $genre 
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Genre $genre)
+    public function destroy(DestroyGenreRequest $request, Genre $genre)
     {
         # Checks if the genre belongs to any title
         $titlesCount = $genre->titles()->count();

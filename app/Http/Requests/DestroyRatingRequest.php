@@ -16,7 +16,7 @@ class DestroyRatingRequest extends FormRequest
     {
         $rating = $this->route('rating');
 
-        return $this->user() && $rating && $this->user()->id === $rating->user_id;
+        return $this->user() && $rating && $this->user()->id === $rating->created_by;
     }
 
     /**

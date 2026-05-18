@@ -5,7 +5,6 @@ use App\Http\Controllers\GenreController;
 use App\Http\Controllers\RatingController;
 use App\Http\Controllers\TitleController;
 use App\Http\Controllers\UserController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,29 +19,70 @@ use Illuminate\Support\Facades\Route;
 */
 
 /*
-| GENERAL
+|---------------------------------
+| Public - Read Only
+|---------------------------------
 */
-Route::apiResource('titles', TitleController::class);
-Route::apiResource('genres', GenreController::class);
-Route::apiResource('users', UserController::class);
-Route::apiResource('ratings', RatingController::class)->only(['index', 'show']);
+// Titles
+Route::get('/titles', [TitleController::class, 'index']);
+Route::get('/titles/{title}', [TitleController::class, 'show']);
+Route::get('/genres/{genre}/titles', [GenreController::class, 'titles']);
+Route::get('/titles/{title}/genres', [TitleController::class, 'genres']);
+
+// Genres
+Route::get('/genres', [GenreController::class, 'index']);
+Route::get('/genres/{genre}', [GenreController::class, 'show']);
+
+// Ratings
+Route::get('/ratings', [RatingController::class, 'index']);
+Route::get('/ratings/{rating}', [RatingController::class, 'show']);
+
+// Authentication
+Route::post('/login', [AuthController::class, 'login']);
 
 /*
-| PROTECTED - USER ACTIONS
+|---------------------------------
+| Protected - Common User Actions
+|---------------------------------
 */
 Route::middleware('auth:sanctum')->group(function () {
+    // Auth
     Route::get('/me', [AuthController::class, 'me']);
-    Route::post('/logout', [AuthController::class, 'logout']);  
-    Route::get('titles/{title}/ratings', [TitleController::class, 'ratings']);  
+    Route::post('/logout', [AuthController::class, 'logout']);
+
+    // Titles
+    Route::post('/titles', [TitleController::class, 'store']);
+    Route::put('/titles/{title}', [TitleController::class, 'update']);
+    Route::patch('/titles/{title}', [TitleController::class, 'update']);
+    Route::delete('/titles/{title}', [TitleController::class, 'destroy']);
+    Route::get('/titles/{title}/ratings', [TitleController::class, 'ratings']);
+
+    // Genres
+    Route::post('/genres', [GenreController::class, 'store']);
+    Route::put('/genres/{genre}', [GenreController::class, 'update']);
+    Route::patch('/genres/{genre}', [GenreController::class, 'update']);
+    Route::delete('/genres/{genre}', [GenreController::class, 'destroy']);
+
+    // Ratings
     Route::post('/ratings', [RatingController::class, 'store']);
     Route::put('/ratings/{rating}', [RatingController::class, 'update']);
     Route::patch('/ratings/{rating}', [RatingController::class, 'update']);
     Route::delete('/ratings/{rating}', [RatingController::class, 'destroy']);
+
+    // Users
+    Route::post('/users', [UserController::class, 'store']);
+    Route::put('/users/{user}', [UserController::class, 'update']);
+    Route::patch('/users/{user}', [UserController::class, 'update']);
 });
 
 /*
-| CUSTOM
+|---------------------------------
+| Protected - Administration Actions
+|---------------------------------
 */
-Route::get('genres/{genre}/titles', [GenreController::class, 'titles']);
-Route::get('titles/{title}/genres', [TitleController::class, 'genres']);
-Route::post('/login', [AuthController::class, 'login']);
+Route::middleware(['auth:sanctum', 'admin'])->group(function () {
+    // Users
+    Route::get('/users', [UserController::class, 'index']);
+    Route::get('/users/{user}', [UserController::class, 'show']);
+    Route::delete('/users/{user}', [UserController::class, 'destroy']);
+});

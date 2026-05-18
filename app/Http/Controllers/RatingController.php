@@ -40,7 +40,7 @@ class RatingController extends Controller
         $data = $request->validated();
 
         # Gets the user's id
-        $data['user_id'] = auth()->id();
+        $data['created_by'] = auth()->id();
 
         # Creates the rating
         $rating = Rating::create($data);

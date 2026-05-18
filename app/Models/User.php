@@ -41,7 +41,7 @@ class User extends Authenticatable {
     |-------------------
     */
     public function ratings() {
-        return $this->hasMany(Rating::class);
+        return $this->hasMany(Rating::class, 'created_by');
     }    
     public function role() {
         return $this->belongsTo(Role::class);

@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class UpdateRatingRequest extends FormRequest
+class DestroyTitleRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,9 +14,10 @@ class UpdateRatingRequest extends FormRequest
      */
     public function authorize()
     {
-        $rating = $this->route('rating');        
-        # Check if the requesting user owns the record
-        return $this->user() && $rating && $this->user()->id === $rating->created_by;
+        $title = $this->route('title');
+        $user = $this->user();
+
+        return $user && $title && ($user->isAdmin() || $user->id === $title->created_by);
     }
 
     /**
@@ -26,10 +27,7 @@ class UpdateRatingRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'rating'  => 'sometimes|between:0,10',
-            'comment' => 'sometimes|string|max:255'
-        ];
+        return [];
     }
 
     /**
@@ -40,7 +38,7 @@ class UpdateRatingRequest extends FormRequest
     protected function failedAuthorization()
     {
         throw new HttpResponseException(response()->json([
-            'message' => 'You can only update ratings created by you.'
+            'message' => 'You can only delete titles created by you.'
         ], 403));
     }
 }

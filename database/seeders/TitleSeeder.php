@@ -18,6 +18,7 @@ class TitleSeeder extends Seeder
         $titles = [
             [
                 'data' => [
+                    'created_by' => 1,
                     'name' => 'Interstellar',
                     'type' => 1,
                     'year' => '2014',
@@ -27,6 +28,7 @@ class TitleSeeder extends Seeder
             ],
             [
                 'data' => [
+                    'created_by' => 1,
                     'name' => 'Tangled',
                     'type' => 1,
                     'year' => '2010',
@@ -36,6 +38,7 @@ class TitleSeeder extends Seeder
             ],
             [
                 'data' => [
+                    'created_by' => 1,
                     'name' => 'The Big Bang Theory',
                     'type' => 2,
                     'year' => '2007-2019',
@@ -45,6 +48,7 @@ class TitleSeeder extends Seeder
             ],
             [
                 'data' => [
+                    'created_by' => 1,
                     'name' => 'Batman Begins',
                     'type' => 1,
                     'year' => '2005',
@@ -54,6 +58,7 @@ class TitleSeeder extends Seeder
             ],
             [
                 'data' => [
+                    'created_by' => 1,
                     'name' => 'Orange Is the New Black',
                     'type' => 2,
                     'year' => '2013-2019',

@@ -22,7 +22,7 @@ class RatingFilter extends Filter {
     }
 
     protected function filterUser($value) {
-        $this->builder->where('user_id', $value);
+        $this->builder->where('created_by', $value);
     }
 
     protected function filterTitle($value) {

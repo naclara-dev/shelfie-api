@@ -9,6 +9,7 @@ class Title extends Model
     protected $table = 'titles';
 
     protected $fillable = [
+        'created_by',
         'name',
         'type',
         'year',
@@ -34,5 +35,8 @@ class Title extends Model
     }
     public function type() {
         return $this->belongsTo(Type::class, 'type');
+    }
+    public function creator() {
+        return $this->belongsTo(User::class, 'created_by');
     }
 }
