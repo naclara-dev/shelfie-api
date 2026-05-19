@@ -10,11 +10,11 @@ class CreateRatingsTable extends Migration {
             $table->engine = 'InnoDB';
             
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
-            $table->foreignId('item_id')->constrained('items')->cascadeOnDelete();
+            $table->foreignId('title_id')->constrained('titles')->cascadeOnDelete();
             $table->decimal('rating', 3, 1);
             $table->string('comment');
             $table->timestamps();
+            $table->foreignId('created_by')->constrained('users')->cascadeOnDelete();
         });
     }
 
@@ -22,5 +22,3 @@ class CreateRatingsTable extends Migration {
         Schema::dropIfExists('ratings');
     }
 }
-
-?>

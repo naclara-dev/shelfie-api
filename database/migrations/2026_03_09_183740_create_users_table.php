@@ -11,9 +11,9 @@ class CreateUsersTable extends Migration {
             
             $table->id();
             $table->string('username');
-            $table->string('email');
+            $table->string('email')->unique();
             $table->string('password');
-            $table->foreignId('role')->constrained();
+            $table->foreignId('role_id')->constrained('roles')->cascadeOnDelete();
             $table->timestamps();
         });
     }
@@ -22,5 +22,3 @@ class CreateUsersTable extends Migration {
         Schema::dropIfExists('users');
     }
 }
-
-?>

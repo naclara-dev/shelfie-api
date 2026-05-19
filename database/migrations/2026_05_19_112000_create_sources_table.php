@@ -12,7 +12,8 @@ class CreateSourcesTable extends Migration
             $table->engine = 'InnoDB';
 
             $table->id();
-            $table->string('name');
+            $table->string('name')->unique();
+            $table->foreignId('media_id')->constrained('media')->cascadeOnDelete();
         });
     }
 

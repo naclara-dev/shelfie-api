@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GenreController;
+use App\Http\Controllers\MediaController;
 use App\Http\Controllers\RatingController;
+use App\Http\Controllers\SourceController;
 use App\Http\Controllers\TitleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -33,9 +35,19 @@ Route::get('/titles/{title}/genres', [TitleController::class, 'genres']);
 Route::get('/genres', [GenreController::class, 'index']);
 Route::get('/genres/{genre}', [GenreController::class, 'show']);
 
+// Media
+Route::get('/media', [MediaController::class, 'index']);
+Route::get('/media/{media}', [MediaController::class, 'show']);
+Route::get('/media/{media}/titles', [MediaController::class, 'titles']);
+
 // Ratings
 Route::get('/ratings', [RatingController::class, 'index']);
 Route::get('/ratings/{rating}', [RatingController::class, 'show']);
+
+// Sources
+Route::get('/sources', [SourceController::class, 'index']);
+Route::get('/sources/{source}', [SourceController::class, 'show']);
+Route::get('/sources/{source}/titles', [SourceController::class, 'titles']);
 
 // Users
 Route::get('/users/{user}/ratings', [UserController::class, 'ratings']);
@@ -84,6 +96,18 @@ Route::middleware('auth:sanctum')->group(function () {
 |---------------------------------
 */
 Route::middleware(['auth:sanctum', 'admin'])->group(function () {
+    // Media
+    Route::post('/media', [MediaController::class, 'store']);
+    Route::put('/media/{media}', [MediaController::class, 'update']);
+    Route::patch('/media/{media}', [MediaController::class, 'update']);
+    Route::delete('/media/{media}', [MediaController::class, 'destroy']);
+
+    // Sources
+    Route::post('/sources', [SourceController::class, 'store']);
+    Route::put('/sources/{source}', [SourceController::class, 'update']);
+    Route::patch('/sources/{source}', [SourceController::class, 'update']);
+    Route::delete('/sources/{source}', [SourceController::class, 'destroy']);
+
     // Users
     Route::get('/users', [UserController::class, 'index']);
     Route::get('/users/{user}', [UserController::class, 'show']);

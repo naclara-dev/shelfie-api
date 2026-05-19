@@ -12,6 +12,7 @@ class Source extends Model
 
     protected $fillable = [
         'name',
+        'media_id',
     ];
 
     /*
@@ -21,6 +22,16 @@ class Source extends Model
     */
     public function titleIdentifiers()
     {
-        return $this->hasMany(TitleIdentifier::class, 'source');
+        return $this->hasMany(TitleIdentifier::class, 'source_id');
+    }
+
+    public function media()
+    {
+        return $this->belongsTo(Media::class, 'media_id');
+    }
+
+    public function titles()
+    {
+        return $this->belongsToMany(Title::class, 'title_identifiers', 'source_id', 'title_id');
     }
 }
