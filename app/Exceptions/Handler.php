@@ -6,6 +6,7 @@ use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -48,6 +49,13 @@ class Handler extends ExceptionHandler
                     'message' => 'E-mail already registered.',
                 ], 422);
             }
+        });
+
+        $this->renderable(function (NotFoundHttpException $e, $request) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Endpoint not found.',
+            ], 404);
         });
     }
 

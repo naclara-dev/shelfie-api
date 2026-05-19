@@ -10,6 +10,10 @@ class Source extends Model
 
     public $timestamps = false;
 
+    protected $with = [
+        'media',
+    ];
+
     protected $fillable = [
         'name',
         'media_id',

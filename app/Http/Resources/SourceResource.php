@@ -17,7 +17,7 @@ class SourceResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'media_id' => $this->media_id,
+            'media' => new MediaResource($this->media),
         ];
     }
 }

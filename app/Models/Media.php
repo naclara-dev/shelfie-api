@@ -20,4 +20,8 @@ class Media extends Model
     public function titles() {
         return $this->hasMany(Title::class, 'media_id');
     }
+
+    public function sources() {
+        return $this->hasMany(Source::class, 'media_id');
+    }
 }

@@ -39,6 +39,7 @@ Route::get('/genres/{genre}', [GenreController::class, 'show']);
 Route::get('/media', [MediaController::class, 'index']);
 Route::get('/media/{media}', [MediaController::class, 'show']);
 Route::get('/media/{media}/titles', [MediaController::class, 'titles']);
+Route::get('/media/{media}/sources', [MediaController::class, 'sources']);
 
 // Ratings
 Route::get('/ratings', [RatingController::class, 'index']);

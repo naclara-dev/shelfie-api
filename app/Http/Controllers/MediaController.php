@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreMediaRequest;
 use App\Http\Requests\UpdateMediaRequest;
 use App\Http\Resources\MediaResource;
+use App\Http\Resources\SourceResource;
+use App\Http\Resources\TitleResource;
 use App\Models\Media;
 use Illuminate\Http\Request;
 
@@ -20,7 +22,12 @@ class MediaController extends Controller
 
     public function titles(Media $media)
     {
-        return $this->success(\App\Http\Resources\TitleResource::collection($media->titles));
+        return $this->success(TitleResource::collection($media->titles));
+    }
+
+    public function sources(Media $media)
+    {
+        return $this->success(SourceResource::collection($media->sources));
     }
 
     public function store(StoreMediaRequest $request)
