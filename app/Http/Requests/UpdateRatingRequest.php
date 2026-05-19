@@ -40,6 +40,7 @@ class UpdateRatingRequest extends FormRequest
     protected function failedAuthorization()
     {
         throw new HttpResponseException(response()->json([
+            'success' => false,
             'message' => 'You can only update ratings created by you.'
         ], 403));
     }

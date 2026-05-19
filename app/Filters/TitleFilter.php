@@ -7,9 +7,8 @@ class TitleFilter extends Filter {
         return [
             'name'     => 'filterName',
             'genres'   => 'filterGenres',
-            'type'     => 'filterType',
+            'media_id' => 'filterMediaId',
             'year'     => 'filterYear',
-            'imdb_id'  => 'filterImdbId'            
         ];
     }
 
@@ -29,15 +28,11 @@ class TitleFilter extends Filter {
         });
     }
 
-    protected function filterType($value) {
-        $this->builder->where('type', $value);
+    protected function filterMediaId($value) {
+        $this->builder->where('media_id', $value);
     }
 
     protected function filterYear($value) {
         $this->builder->where('year', $value);
-    }
-
-    protected function filterImdbId($value) {
-        $this->builder->where('imdb_id', $value);
     }
 }

@@ -10,8 +10,10 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(RoleSeeder::class);
         $this->call(UserSeeder::class);
+        $this->call(SourceSeeder::class);
         $this->call(GenreSeeder::class);
-        $this->call(TypeSeeder::class);
-        $this->call(TitleSeeder::class);        
+        $this->call(MediaSeeder::class);
+        $this->call(TitleSeeder::class);
+        $this->call(TitleIdentifierSeeder::class);
     }
 }

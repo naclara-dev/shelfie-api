@@ -59,7 +59,7 @@ class UpdateUserRequest extends FormRequest
     {
         return [
             'role_id.prohibited' => 'Only admins can update user roles.',
-            'email.unique' => 'This email is already in use.',
+            'email.unique' => 'E-mail already registered.',
             'username.unique' => 'This username is already in use.',
         ];
     }
@@ -72,7 +72,8 @@ class UpdateUserRequest extends FormRequest
     protected function failedAuthorization()
     {
         throw new HttpResponseException(response()->json([
-            'message' => 'You can only update your own user unless you are an admin.'
+            'success' => false,
+            'message' => 'You can only update your own user.'
         ], 403));
     }
 }

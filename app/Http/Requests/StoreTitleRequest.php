@@ -46,12 +46,11 @@ class StoreTitleRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'    => 'required|string',
-            'type'     => 'required|string|exists:types,id',
-            'year'     => 'sometimes|string',
-            'imdb_id'  => 'required|string|unique:titles,imdb_id',
-            'genres'   => 'sometimes|array',
-            'genres.*' => 'exists:genres,id|distinct'  
+            'name' => 'required|string',
+            'media_id' => 'required|integer|exists:media,id',
+            'year' => 'sometimes|string',
+            'genres' => 'sometimes|array',
+            'genres.*' => 'exists:genres,id|distinct'
         ];
     }
 
@@ -63,8 +62,7 @@ class StoreTitleRequest extends FormRequest
     public function messages()
     {
         return [
-            'type.exists'     => 'The type ID does not exists.',
-            'imdb_id.unique'  => 'A title with this IMDb ID already exists.'
+            'media_id.exists' => 'The media ID does not exist.',
         ];
     }
 }

@@ -21,9 +21,10 @@ class RatingController extends Controller
     public function index(Request $request)
     {
         $filter = new RatingFilter($request);
+        $perPage = min(max((int) $request->query('per_page', 15), 1), 100);
 
         $query = Rating::query();
-        $ratings = $filter->apply($query)->get();
+        $ratings = $filter->apply($query)->paginate($perPage)->appends($request->query());
 
         return $this->success(RatingResource::collection($ratings));
     }

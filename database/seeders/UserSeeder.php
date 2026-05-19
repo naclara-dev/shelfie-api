@@ -20,6 +20,12 @@ class UserSeeder extends Seeder
                 "username" => "naclara",
                 "password" => "123",
                 "role_id" => 2
+            ],
+            [
+                "email" => "tifanymporto@gmail.com",
+                "username" => "titiporto",
+                "password" => "123",
+                "role_id" => 1
             ]
         ];
 

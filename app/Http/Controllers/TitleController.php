@@ -23,9 +23,10 @@ class TitleController extends Controller
     public function index(Request $request)
     {
         $filter = new TitleFilter($request);
+        $perPage = min(max((int) $request->query('per_page', 15), 1), 100);
 
         $query = Title::query();
-        $titles = $filter->apply($query)->get();
+        $titles = $filter->apply($query)->paginate($perPage)->appends($request->query());
 
         return $this->success(TitleResource::collection($titles));
     }
@@ -114,7 +115,7 @@ class TitleController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Http\Requests\DestroyTitleRequest  $request
-     * @param  App\Models\Title  $title
+     * @param  \App\Models\Title  $title
      * @return \Illuminate\Http\Response
      */
     public function destroy(DestroyTitleRequest $request, Title $title)

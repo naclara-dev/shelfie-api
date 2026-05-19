@@ -46,12 +46,11 @@ class UpdateTitleRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'    => 'sometimes|string',
-            'type'     => 'sometimes|string|exists:types,id',
-            'year'     => 'sometimes|string',
-            'imdb_id'  => 'sometimes|string',
-            'genres'   => 'sometimes|array',
-            'genres.*' => 'exists:genres,id|distinct' 
+            'name' => 'sometimes|string',
+            'media_id' => 'sometimes|integer|exists:media,id',
+            'year' => 'sometimes|string',
+            'genres' => 'sometimes|array',
+            'genres.*' => 'exists:genres,id|distinct'
         ];
     }
 
@@ -63,7 +62,7 @@ class UpdateTitleRequest extends FormRequest
     public function messages()
     {
         return [
-            'imdb_id.unique' => 'A title with this imdb_id already exists.'
+            'media_id.exists' => 'The media ID does not exist.'
         ];
     }
 }

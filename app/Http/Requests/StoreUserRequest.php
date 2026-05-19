@@ -25,8 +25,20 @@ class StoreUserRequest extends FormRequest
     {
         return [
             'username' => 'required|string',
-            'email'    => 'required|email',
+            'email'    => 'required|email|unique:users,email',
             'password' => 'required'
+        ];
+    }
+
+    /**
+     * Get custom messages for validator errors.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'email.unique' => 'E-mail already registered.',
         ];
     }
 }

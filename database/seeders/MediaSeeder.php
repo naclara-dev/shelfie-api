@@ -3,9 +3,9 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Type;
+use App\Models\Media;
 
-class TypeSeeder extends Seeder
+class MediaSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,13 +14,15 @@ class TypeSeeder extends Seeder
      */
     public function run()
     {
-        $types = [
+        $media = [
             'movie',
             'series',
+            'book',
+            'song'
         ];
 
-        foreach ($types as $type) {
-            Type::firstOrCreate(['name' => $type]);
+        foreach ($media as $name) {
+            Media::firstOrCreate(['name' => $name]);
         }
     }
 }

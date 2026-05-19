@@ -20,7 +20,7 @@ class Admin
 
         if (!$user->isAdmin()) {
             return response()->json([
-                'error'   => 'true',
+                'success' => false,
                 'message' => 'Admin access only.'
             ], 403);
         }

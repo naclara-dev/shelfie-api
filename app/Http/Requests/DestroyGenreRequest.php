@@ -38,6 +38,7 @@ class DestroyGenreRequest extends FormRequest
     protected function failedAuthorization()
     {
         throw new HttpResponseException(response()->json([
+            'success' => false,
             'message' => 'You can only delete genres created by you.'
         ], 403));
     }

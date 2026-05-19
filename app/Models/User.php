@@ -42,7 +42,13 @@ class User extends Authenticatable {
     */
     public function ratings() {
         return $this->hasMany(Rating::class, 'created_by');
-    }    
+    }
+    public function titles() {
+        return $this->hasMany(Title::class, 'created_by');
+    }
+    public function genres() {
+        return $this->hasMany(Genre::class, 'created_by');
+    }
     public function role() {
         return $this->belongsTo(Role::class, 'role_id');
     }

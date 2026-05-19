@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use App\Http\Resources\RatingResource;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\UserPrivateResource;
 use App\Http\Resources\UserPublicResource;
+use App\Models\User;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -16,9 +17,12 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return $this->success(UserPrivateResource::collection(User::all()));
+        $perPage = min(max((int) $request->query('per_page', 15), 1), 100);
+        $users = User::paginate($perPage)->appends($request->query());
+
+        return $this->success(UserPrivateResource::collection($users));
     }
 
     /**
@@ -60,11 +64,17 @@ class UserController extends Controller
     /**
      * Display a listing of ratings associated with the user.
      *
-     * @param  \App\Models\User  $user
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function ratings(User $user)
+    public function ratings($id)
     {
+        $user = User::find($id);
+
+        if (!$user) {
+            return $this->error('User not found.', 404);
+        }
+
         return $this->success(RatingResource::collection($user->ratings));
     }
 

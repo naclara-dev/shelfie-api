@@ -22,9 +22,10 @@ class GenreController extends Controller
     public function index(Request $request)
     {
         $filter = new GenreFilter($request);
+        $perPage = min(max((int) $request->query('per_page', 15), 1), 100);
 
         $query = Genre::query();
-        $genres = $filter->apply($query)->get();
+        $genres = $filter->apply($query)->paginate($perPage)->appends($request->query());
 
         return $this->success(GenreResource::collection($genres));
     }

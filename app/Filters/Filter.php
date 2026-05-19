@@ -55,7 +55,7 @@ abstract class Filter {
     protected function throwError($message, $status = 400) {
         throw new HttpResponseException(
             response()->json([
-                'error'   => true,
+                'success' => false,
                 'message' => $message
             ], $status)
         );

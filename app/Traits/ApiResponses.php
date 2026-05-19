@@ -20,9 +20,23 @@ trait ApiResponses
         ];
 
         if (!is_null($data)) {
-            $payload['data'] = method_exists($data, 'resolve')
+            $resolved = method_exists($data, 'resolve')
                 ? $data->resolve(request())
                 : $data;
+
+            if (is_array($resolved) && array_key_exists('data', $resolved)) {
+                $payload['data'] = $resolved['data'];
+
+                if (array_key_exists('links', $resolved)) {
+                    $payload['links'] = $resolved['links'];
+                }
+
+                if (array_key_exists('meta', $resolved)) {
+                    $payload['meta'] = $resolved['meta'];
+                }
+            } else {
+                $payload['data'] = $resolved;
+            }
         }
 
         return response()->json($payload, $status);

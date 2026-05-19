@@ -3,10 +3,8 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Http\Resources\GenreResource;
-use App\Http\Resources\MediaResource;
 
-class TitleResource extends JsonResource
+class MediaResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -19,9 +17,6 @@ class TitleResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'year' => $this->year,
-            'media' => new MediaResource($this->whenLoaded('media')),            
-            'genres' => GenreResource::collection($this->genres),
         ];
     }
 }

@@ -20,9 +20,8 @@ class TitleSeeder extends Seeder
                 'data' => [
                     'created_by' => 1,
                     'name' => 'Interstellar',
-                    'type' => 1,
+                    'media_id' => 1,
                     'year' => '2014',
-                    'imdb_id' => 'tt0816692',
                 ],
                 'genres' => ['Sci-Fi', 'Drama']                            
             ],
@@ -30,9 +29,8 @@ class TitleSeeder extends Seeder
                 'data' => [
                     'created_by' => 1,
                     'name' => 'Tangled',
-                    'type' => 1,
+                    'media_id' => 1,
                     'year' => '2010',
-                    'imdb_id' => 'tt0398286',
                 ],
                 'genres' => ['Animation', 'Family', 'Musical']                            
             ],
@@ -40,9 +38,8 @@ class TitleSeeder extends Seeder
                 'data' => [
                     'created_by' => 1,
                     'name' => 'The Big Bang Theory',
-                    'type' => 2,
+                    'media_id' => 2,
                     'year' => '2007-2019',
-                    'imdb_id' => 'tt0898266',
                 ],
                 'genres' => ['Comedy', 'Romance']                            
             ],
@@ -50,9 +47,8 @@ class TitleSeeder extends Seeder
                 'data' => [
                     'created_by' => 1,
                     'name' => 'Batman Begins',
-                    'type' => 1,
+                    'media_id' => 1,
                     'year' => '2005',
-                    'imdb_id' => 'tt0372784',
                 ],
                 'genres' => ['Action', 'Superheroes']                            
             ],
@@ -60,9 +56,8 @@ class TitleSeeder extends Seeder
                 'data' => [
                     'created_by' => 1,
                     'name' => 'Orange Is the New Black',
-                    'type' => 2,
+                    'media_id' => 2,
                     'year' => '2013-2019',
-                    'imdb_id' => 'tt2372162',
                 ],
                 'genres' => ['Drama', 'Comedy']                            
             ]
@@ -70,7 +65,7 @@ class TitleSeeder extends Seeder
 
         foreach ($titles as $entry) {
             $title = Title::firstOrCreate(
-                ['imdb_id' => $entry['data']['imdb_id']],
+                ['name' => $entry['data']['name'], 'media_id' => $entry['data']['media_id']],
                 $entry['data']
             );
 
